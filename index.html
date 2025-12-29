@@ -1,15 +1,53 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>My Website</title>
+  <title>Stock SIP Calculator</title>
+  <style>
+    body { font-family: Arial; text-align:center; padding:20px; }
+    input, button { padding:10px; margin:5px; width:150px; }
+    #result { margin-top:20px; font-size:18px; font-weight:bold; }
+  </style>
 </head>
 <body>
 
-<h1>Hello Hardik 👋</h1>
-<p>Meri pehli website mobile se ban rahi hai</p>
+<h1>Stock SIP Calculator</h1>
 
-<button onclick="hello()">Click Me</button>
+<p>Daily Investment (₹): <input type="number" id="daily" value="550"></p>
+<p>Monthly Investment (₹): <input type="number" id="monthly" value="11000"></p>
+<p>Price per share (₹): <input type="number" id="price" value="1000"></p>
+<p>Days per month: <input type="number" id="days" value="22"></p>
+<p>Months: <input type="number" id="months" value="12"></p>
 
-<script src="script.js"></script>
+<button onclick="calculate()">Calculate</button>
+
+<div id="result"></div>
+
+<script>
+function calculate() {
+  let daily = parseFloat(document.getElementById("daily").value);
+  let monthly = parseFloat(document.getElementById("monthly").value);
+  let price = parseFloat(document.getElementById("price").value);
+  let days = parseFloat(document.getElementById("days").value);
+  let months = parseFloat(document.getElementById("months").value);
+
+  // Daily shares = daily investment * total days / price
+  let totalDays = days * months;
+  let dailyShares = (daily * totalDays) / price;
+  let dailyValue = dailyShares * price;
+
+  // Monthly shares = monthly investment * months / price
+  let monthlyShares = (monthly * months) / price;
+  let monthlyValue = monthlyShares * price;
+
+  let better = dailyValue > monthlyValue ? "Daily investment is better" : "Monthly investment is better";
+
+  document.getElementById("result").innerHTML = `
+    Daily Shares: ${dailyShares.toFixed(2)}, Value: ₹${dailyValue.toFixed(2)}<br>
+    Monthly Shares: ${monthlyShares.toFixed(2)}, Value: ₹${monthlyValue.toFixed(2)}<br>
+    <b>${better}</b>
+  `;
+}
+</script>
+
 </body>
 </html>
